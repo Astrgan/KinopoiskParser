@@ -34,5 +34,10 @@ public class Main {
 
             System.out.println();
         }
+
+
+        System.out.println(doc.select("div[itemprop=description]").get(0).text());
+
+        System.out.println(doc.select("span[class=rating_ball]").get(0).text());
     }
 }
