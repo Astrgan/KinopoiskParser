@@ -3,7 +3,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.io.IOException;
+import java.io.*;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -39,5 +40,28 @@ public class Main {
         System.out.println(doc.select("div[itemprop=description]").get(0).text());
 
         System.out.println(doc.select("span[class=rating_ball]").get(0).text());
+
+        Element link = doc.select("link[rel=\"image_src\"]").first();
+        String relHref = link.attr("href");
+        System.out.println(relHref);
+        getImage(relHref);
+    }
+
+    static public void getImage(String strURL){
+        try{
+
+            URL url = new URL(strURL);
+            InputStream in = url.openStream();
+            OutputStream out = new BufferedOutputStream(new FileOutputStream("image.jpg"));
+
+            for (int b; (b = in.read()) != -1;) {
+                out.write(b);
+            }
+            out.close();
+            in.close();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }
